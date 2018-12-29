@@ -25,6 +25,12 @@ def process_img(img):
 
     greenStr = "green"
 
+    cv2.drawContours(img, contours_green, -1, (255,255,0), 3)
+
+    #cv2.imshow('image', img)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+
     try:
         for i in range(len(contours_green)):
             if len(contours_green[i]) != 0:
