@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import math
+#from mask_prac import *
 
 def process_img(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -69,7 +70,7 @@ file_name = 'geometric_shapes.jpg'
 # load image
 img = cv2.imread(file_name, 1)
 
-# draw contour
+# draw contour(s)
 processed = process_img(img)
 
 # display both images
