@@ -2,12 +2,13 @@
 import cv2
 import numpy as np
 import math
-from mask_prac import *
+from masks import *
 
 heightThresh = 0 # not important right now
 
 def label_contours(contours, img, color):
     for c in contours:
+        # add a check for the size of the contour
         #print("blue found")
         M = cv2.moments(c)
 
@@ -26,10 +27,10 @@ def label_contours(contours, img, color):
 
 def process_img(img):
 
-    maskBlue = blueMask(img)
-    maskRed = redMask(img)
-    maskYellow = yellowMask(img)
-    maskGreen = greenMask(img)
+    maskBlue = mask(img, "blue")
+    maskRed = mask(img, "red")
+    maskYellow = mask(img, "yellow")
+    maskGreen = mask(img, "green")
 
     im, contours_blue, hierarchy_blue = cv2.findContours(maskBlue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     im, contours_red, hierarchy_red = cv2.findContours(maskRed, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)

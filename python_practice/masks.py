@@ -3,6 +3,23 @@ import cv2
 import numpy as np
 import math
 
+def mask(img, color):
+    # takes an OpenCV image and a string color ("blue", "yellow", "green", "red")
+    # returns a mask for the given color
+    if (color == "red"):
+        mask = redMask(img)
+    elif (color == "yellow"):
+        mask = yellowMask(img)
+    elif (color == "blue"):
+        mask = blueMask(img)
+    elif (color == "green"):
+        mask = greenMask(img)
+    else:
+        print("Error, invalid color option")
+
+    return mask
+
+
 def blueMask(img):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -79,6 +96,8 @@ def redMask(img):
     maskRed = cv2.bitwise_or(maskRed1, maskRed2)
 
     return maskRed;
+
+# ADD MORE AS NEEDED! :)
 
 
 #file_name = 'source_images/geometric_shapes.jpg'
