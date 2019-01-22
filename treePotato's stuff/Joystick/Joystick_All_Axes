@@ -1,0 +1,47 @@
+import pyvjoy
+import random
+import time
+import math
+
+#Set all axes to more readable values
+throttle = pyvjoy.HID_USAGE_Y
+yaw = pyvjoy.HID_USAGE_X
+pitch = pyvjoy.HID_USAGE_RY
+roll = pyvjoy.HID_USAGE_RX
+
+#Value to multiply by
+MAX_VJOY = 32767
+
+j = pyvjoy.VJoyDevice(1)
+
+def axis_loop(axis,j):
+    val = 0
+    for x in range(100):
+        input = math.floor(val*MAX_VJOY)
+        j.set_axis(axis, input)
+        val += 0.01
+        time.sleep(0.01)
+
+    for x in range(101):
+        input = math.floor(val*MAX_VJOY)
+        j.set_axis(axis, input)
+        val -= 0.01
+        time.sleep(0.01)
+
+def reset_axes(j):
+    j.set_axis(throttle,0)
+    j.set_axis(yaw,math.floor(0.5*MAX_VJOY))
+    j.set_axis(pitch,math.floor(0.5*MAX_VJOY))
+    j.set_axis(roll,math.floor(0.5*MAX_VJOY))
+
+
+time.sleep(2)
+
+reset_axes(j)
+axis_loop(throttle,j)
+axis_loop(yaw,j)
+reset_axes(j)
+axis_loop(pitch,j)
+reset_axes(j)
+axis_loop(roll,j)
+reset_axes(j)
