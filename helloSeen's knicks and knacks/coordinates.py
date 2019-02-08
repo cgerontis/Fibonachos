@@ -2,8 +2,9 @@
 ##For each image the user chooses coordinates on the image that
 ##they want to save. The left mouse button saves a coordinate
 ##and places a red circle, the 'd' key removes the last coordinate,
-##and the 'c' key saves the coordinates and moves on to the next image.
-##It saves the coordinates per line per image in coordinatesList.txt
+##the 'c' key saves the coordinates and moves on to the next image,
+##and the 'q' key will close everything down before the last image.
+##It will save the coordinates per line per image in coordinateList.txt
 
 # import necessary packages
 import cv2
@@ -32,17 +33,21 @@ for x in onlyfiles:
 #print(onlyfiles) //Uncomment for problem solving
 f = open("coordinateList.txt","a+")
 #Iterate through the files
+stop = False
 for x in onlyfiles:
     #print(x) //Uncomment for problem solving
     # load the image, clone it, and setup the mouse callback function
     image = cv2.imread(path+'\\'+x)
     clone = image.copy()
-    cv2.namedWindow("image")
+    cv2.namedWindow("image",cv2.WINDOW_NORMAL)
     cv2.setMouseCallback("image", fourclicks)
-     
+    if (stop):
+        cv2.destroyAllWindows()
+        break
     # keep looping until the 'c' key is pressed
     while True:
             # display the image and wait for a keypress
+            
             cv2.imshow("image", image)
             key = cv2.waitKey(1) & 0xFF
      
@@ -61,6 +66,9 @@ for x in onlyfiles:
                     f.write("{0},".format(x))
                 f.write("\n")
                 coordList = []
+                break
+            elif key == ord("q"):
+                stop = True
                 break
     cv2.destroyAllWindows()
     
