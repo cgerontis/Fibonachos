@@ -29,9 +29,9 @@ image = cv2.imread('C:/Users/Sean Nemtzow/Downloads/Data_Training/Data_Training/
 resized = imutils.resize(image, width=900)
 ratio = image.shape[0] / float(resized.shape[0])
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-blurred = cv2.GaussianBlur(gray, (11, 11), 0)
+blurred = cv2.GaussianBlur(gray, (7, 7), 0)
 thresh_low = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY)[1]
-thresh_high = cv2.threshold(blurred, 100, 255, cv2.THRESH_BINARY)[1]
+thresh_high = cv2.threshold(blurred, 117, 255, cv2.THRESH_BINARY)[1]
 
  
 # find contours in the thresholded images 
@@ -60,6 +60,23 @@ for c in cnts_low:
         x,y,w,h = cv2.boundingRect(c)
         cv2.rectangle(image,(int(x*ratio),int(y*ratio)),(int((x+w)*ratio),int((y+h)*ratio)), (0,0,255),2)
         cv2.putText(image, 'Corner', (int(x*ratio),int(y*ratio)), cv2.FONT_HERSHEY_SIMPLEX, .5, (255,255,255), 2, cv2.LINE_AA)
+        Cx = int(M["m10"]/M["m00"]*ratio)
+        Cy = int(M["m01"]/M["m00"]*ratio)
+        topX = int(x*ratio)
+        topY = int(y*ratio)
+        bottomX = int((x+w)*ratio)
+        bottomY = int((y+h)*ratio)
+        if (abs(topX-Cx) > abs(bottomX-Cx)):
+                x_fin = topX
+        else:
+                x_fin = bottomX
+        if (abs(topY-Cy) > abs(bottomY-Cy)):
+                y_fin = topY
+        else:
+                y_fin = bottomY
+        difX = x_fin-Cx
+        difY = y_fin-Cy
+        cv2.line(image,(Cx,Cy),(Cx+(difX*3),Cy+(difY*3)),(255,255,0),2,8,0)
         # multiply the contour (x, y)-coordinates by the resize ratio,
         # then draw the contours
         c = c.astype("float")
@@ -81,6 +98,23 @@ for c in cnts_high:
         x,y,w,h = cv2.boundingRect(c)
         cv2.rectangle(image,(int(x*ratio),int(y*ratio)),(int((x+w)*ratio),int((y+h)*ratio)), (0,0,255),2)
         cv2.putText(image, 'Corner', (int(x*ratio),int(y*ratio)), cv2.FONT_HERSHEY_SIMPLEX, .5, (255,255,255), 2, cv2.LINE_AA)
+        Cx = int(M["m10"]/M["m00"]*ratio)
+        Cy = int(M["m01"]/M["m00"]*ratio)
+        topX = int(x*ratio)
+        topY = int(y*ratio)
+        bottomX = int((x+w)*ratio)
+        bottomY = int((y+h)*ratio)
+        if (abs(topX-Cx) > abs(bottomX-Cx)):
+                x_fin = topX
+        else:
+                x_fin = bottomX
+        if (abs(topY-Cy) > abs(bottomY-Cy)):
+                y_fin = topY
+        else:
+                y_fin = bottomY
+        difX = x_fin-Cx
+        difY = y_fin-Cy
+        cv2.line(image,(Cx,Cy),(Cx+(difX*3),Cy+(difY*3)),(255,255,0),2,8,0)
         # multiply the contour (x, y)-coordinates by the resize ratio,
         # then draw the contours
         c = c.astype("float")
