@@ -66,6 +66,8 @@ for c in cnts_low:
         topY = int(y*ratio)
         bottomX = int((x+w)*ratio)
         bottomY = int((y+h)*ratio)
+        #Determines the orientation of the corner by finding the closest corner
+        #To the calculated centroid of the shape
         if (abs(topX-Cx) > abs(bottomX-Cx)):
                 x_fin = topX
         else:
@@ -76,6 +78,8 @@ for c in cnts_low:
                 y_fin = bottomY
         difX = x_fin-Cx
         difY = y_fin-Cy
+        #Then draws a line to the furthest corner and multiply the length by 3
+        #This in effect points to the center of the gate
         cv2.line(image,(Cx,Cy),(Cx+(difX*3),Cy+(difY*3)),(255,255,0),2,8,0)
         # multiply the contour (x, y)-coordinates by the resize ratio,
         # then draw the contours
@@ -104,6 +108,8 @@ for c in cnts_high:
         topY = int(y*ratio)
         bottomX = int((x+w)*ratio)
         bottomY = int((y+h)*ratio)
+        #Determines the orientation of the corner by finding the closest corner
+        #To the calculated centroid of the shape
         if (abs(topX-Cx) > abs(bottomX-Cx)):
                 x_fin = topX
         else:
@@ -114,6 +120,8 @@ for c in cnts_high:
                 y_fin = bottomY
         difX = x_fin-Cx
         difY = y_fin-Cy
+        #Then draws a line to the furthest corner and multiply the length by 3
+        #This in effect points to the center of the gate
         cv2.line(image,(Cx,Cy),(Cx+(difX*3),Cy+(difY*3)),(255,255,0),2,8,0)
         # multiply the contour (x, y)-coordinates by the resize ratio,
         # then draw the contours
@@ -124,4 +132,4 @@ for c in cnts_high:
 
 #Show the final image
 cv2.imshow("Image", image)
-#cv2.imwrite('randomTest_' + string,image) #Uncomment this if you want to save the results
+#cv2.imwrite('Random_Test'+ string,image) #Uncomment this if you want to save the results
