@@ -177,6 +177,11 @@ else:
                 cv2.rectangle(image,(x1,y1),(x2,y2),(0,255,0), 2)
                 print("Note: No final contour, guessing middle")
 #Show the final image
-print(coord_track)
+reformat = [[]]
+for x in coord_track:
+        for y in x:
+                reformat[0].append(y)
+                
+print(reformat)
 cv2.imshow(string, image)
 #cv2.imwrite('Filtered_contours_2.jpg',image) #Uncomment this if you want to save the results
